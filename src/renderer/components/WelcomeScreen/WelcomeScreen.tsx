@@ -12,6 +12,7 @@ import BackgroundImage from 'renderer/components/Images/background';
 import CallsImage from 'renderer/components/Images/calls';
 import CollaborateImage from 'renderer/components/Images/collaborate';
 import ThreadsEmptyImage from 'renderer/components/Images/threads-empty';
+import amazeLogo from 'renderer/assets/amaze_logo.png';
 import ToolsImage from 'renderer/components/Images/tools';
 import WelcomeScreenSlide from 'renderer/components/WelcomeScreen/WelcomeScreenSlide';
 
@@ -39,20 +40,25 @@ function WelcomeScreen({
             title: (
                 <FormattedMessage
                     id='renderer.components.welcomeScreen.slides.welcome.title'
-                    defaultMessage='Welcome'
+                    defaultMessage='Welcome to Amaze Connect'
                 />
             ),
             subtitle: (
                 <FormattedMessage
                     id='renderer.components.welcomeScreen.slides.welcome.subtitle'
-                    defaultMessage='Mattermost is a sovereign collaboration platform built for operational environments and uncompromising security.'
+                    defaultMessage='Amaze Connect is a sovereign collaboration platform built for operational environments and uncompromising security.'
                 />
             ),
             image: (
-                <ThreadsEmptyImage/>
+                <img
+                    src={amazeLogo}
+                    alt='Amaze Connect'
+                    style={{maxWidth: '360px', width: '100%', height: 'auto', marginBottom: '20px'}}
+                />
             ),
             main: true,
         },
+
         {
             key: 'Collaborate in real-time',
             title: (

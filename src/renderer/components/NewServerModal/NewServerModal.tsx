@@ -14,6 +14,7 @@ import type {UniqueServer} from 'types/config';
 import type {Permissions} from 'types/permissions';
 import type {URLValidationResult} from 'types/server';
 
+import amazeLogo from 'renderer/assets/amaze_logo.png';
 import './NewServerModal.scss';
 
 type Props = {
@@ -394,6 +395,9 @@ class NewServerModal extends React.PureComponent<Props, State> {
                 footerDivider={true}
             >
                 <>
+                    <div style={{display: 'flex', justifyContent: 'center', marginBottom: '24px', paddingTop: '8px'}}>
+                        <img src={amazeLogo} alt='Amaze Connect' style={{maxHeight: '44px', width: 'auto'}} />
+                    </div>
                     {!(this.props.editMode && this.props.server?.isPredefined) &&
                         <>
                             <Input
@@ -408,7 +412,7 @@ class NewServerModal extends React.PureComponent<Props, State> {
                                     type: STATUS.INFO,
                                     value: this.props.intl.formatMessage({
                                         id: 'renderer.components.newServerModal.serverURL.description',
-                                        defaultMessage: 'The URL of your Mattermost server. Must start with http:// or https://.',
+                                        defaultMessage: 'The URL of your Amaze Connect server. Must start with http:// or https://.',
                                     }),
                                 })}
                                 placeholder={this.props.intl.formatMessage({

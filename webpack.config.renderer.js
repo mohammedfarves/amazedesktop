@@ -41,19 +41,19 @@ module.exports = merge(base, {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'Mattermost Desktop App',
+            title: 'Amaze Connect Desktop App',
             template: 'src/renderer/index.html',
             chunks: ['index'],
             filename: 'index.html',
         }),
         new HtmlWebpackPlugin({
-            title: 'Mattermost Desktop Settings',
+            title: 'Amaze Connect Settings',
             template: 'src/renderer/index.html',
             chunks: ['settings'],
             filename: 'settings.html',
         }),
         new HtmlWebpackPlugin({
-            title: 'Mattermost Desktop Settings',
+            title: 'Amaze Connect Settings',
             template: 'src/renderer/index.html',
             chunks: ['dropdown'],
             filename: 'dropdown.html',
@@ -179,7 +179,7 @@ module.exports = merge(base, {
             test: /\.mp3$/,
             type: 'asset/inline',
         }, {
-            test: /\.(svg|gif|jpg)$/,
+            test: /\.(svg|gif|jpg|png)$/,
             type: 'asset/resource',
         }, {
             test: /\.(eot|ttf|woff|woff2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,

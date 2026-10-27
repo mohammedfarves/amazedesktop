@@ -1,12 +1,12 @@
 {
   "name": "mattermost-desktop",
-  "productName": "Mattermost",
+  "productName": "Amaze Connect",
   "version": "6.5.0-develop.1",
-  "description": "Mattermost",
+  "description": "Amaze Connect",
   "main": "dist/index.js",
-  "author": "Mattermost, Inc. <feedback@mattermost.com>",
+  "author": "Amaze",
   "license": "Apache-2.0",
-  "desktopName": "com.Mattermost.Desktop",
+  "desktopName": "com.AmazeConnect.Desktop",
   "homepage": "https://mattermost.com",
   "engines": {
     "node": ">=24.0.0"
