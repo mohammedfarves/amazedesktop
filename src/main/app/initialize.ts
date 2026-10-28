@@ -112,6 +112,7 @@ const log = new Logger('App.Initialize');
  * Main entry point for the application, ensures that everything initializes in the proper order
  */
 export async function initialize() {
+    app.name = 'Amaze One';
     CriticalErrorHandler.init();
     global.willAppQuit = false;
 

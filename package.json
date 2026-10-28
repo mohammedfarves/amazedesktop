@@ -1,6 +1,6 @@
 {
   "name": "mattermost-desktop",
-  "productName": "Amaze Connect",
+  "productName": "Amaze One",
   "version": "6.5.0-develop.1",
   "description": "Amaze Connect",
   "main": "dist/index.js",

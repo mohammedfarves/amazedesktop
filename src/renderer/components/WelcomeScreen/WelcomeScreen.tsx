@@ -12,8 +12,8 @@ import BackgroundImage from 'renderer/components/Images/background';
 import CallsImage from 'renderer/components/Images/calls';
 import CollaborateImage from 'renderer/components/Images/collaborate';
 import ThreadsEmptyImage from 'renderer/components/Images/threads-empty';
-import amazeLogo from 'renderer/assets/amaze_logo.png';
 import ToolsImage from 'renderer/components/Images/tools';
+import appIconDark from 'renderer/assets/app_icon_dark.png';
 import WelcomeScreenSlide from 'renderer/components/WelcomeScreen/WelcomeScreenSlide';
 
 import 'renderer/css/components/Button.scss';
@@ -40,20 +40,20 @@ function WelcomeScreen({
             title: (
                 <FormattedMessage
                     id='renderer.components.welcomeScreen.slides.welcome.title'
-                    defaultMessage='Welcome to Amaze Connect'
+                    defaultMessage='Welcome to Amaze One'
                 />
             ),
             subtitle: (
                 <FormattedMessage
                     id='renderer.components.welcomeScreen.slides.welcome.subtitle'
-                    defaultMessage='Amaze Connect is a sovereign collaboration platform built for operational environments and uncompromising security.'
+                    defaultMessage='Amaze One is a sovereign collaboration platform built for mission-critical operations, persistent team channels, and high-security enterprise workflows.'
                 />
             ),
             image: (
                 <img
-                    src={amazeLogo}
-                    alt='Amaze Connect'
-                    style={{maxWidth: '360px', width: '100%', height: 'auto', marginBottom: '20px'}}
+                    src={appIconDark}
+                    alt='Amaze One'
+                    style={{maxWidth: '120px', width: '100%', height: 'auto', marginBottom: '24px', borderRadius: '24px'}}
                 />
             ),
             main: true,
