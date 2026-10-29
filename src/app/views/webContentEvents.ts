@@ -37,6 +37,7 @@ import allowProtocolDialog from 'main/security/allowProtocolDialog';
 import LocalNetworkAccessManager from 'main/security/localNetworkAccess';
 import {composeUserAgent, openExternalSafely} from 'main/utils';
 
+import {openBrandPage} from './brandPages';
 import {generateHandleConsoleMessage, generateWillFrameNavigate, isCustomProtocol, isMattermostProtocol, showInvalidLinkModal} from './webContentEventsCommon';
 
 const log = new Logger('WebContentsEventManager');
@@ -152,6 +153,11 @@ export class WebContentsEventManager {
             // Dev tools case
             if (parsedURL.protocol === 'devtools:') {
                 return {action: 'allow'};
+            }
+
+            // Stock About / Privacy / Terms / Help links open the bundled Amaze One pages
+            if (openBrandPage(parsedURL)) {
+                return {action: 'deny'};
             }
 
             // Allow plugins to open blank popup windows.

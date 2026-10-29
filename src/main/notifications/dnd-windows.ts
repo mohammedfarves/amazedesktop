@@ -15,13 +15,19 @@ function getWindowsDoNotDisturb() {
         return false;
     }
 
-    const focusAssistValue = getFocusAssist().value;
-    switch (focusAssistValue) {
-    case 2:
-        return true;
-    case 1:
-        return !(isPriority('Mattermost.Desktop').value);
-    default:
+    // The native addon is absent in builds that couldn't compile it for Windows;
+    // treat that as "not in Do Not Disturb" so notifications still show
+    try {
+        const focusAssistValue = getFocusAssist().value;
+        switch (focusAssistValue) {
+        case 2:
+            return true;
+        case 1:
+            return !(isPriority('Mattermost.Desktop').value);
+        default:
+            return false;
+        }
+    } catch {
         return false;
     }
 }

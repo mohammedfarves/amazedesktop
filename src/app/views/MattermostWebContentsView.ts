@@ -37,6 +37,8 @@ import performanceMonitor from 'main/performanceMonitor';
 import LocalNetworkAccessManager from 'main/security/localNetworkAccess';
 import {getServerAPI} from 'main/server/serverAPI';
 
+import {getBrandPageLabel} from './brandPages';
+import {applyBrandStyles} from './brandStyles';
 import WebContentsEventManager from './webContentEvents';
 
 import ContextMenu from '../../main/contextMenu';
@@ -84,6 +86,7 @@ export class MattermostWebContentsView extends EventEmitter {
         this.webContentsView = new WebContentsView(this.options);
         this.cachedWebContentsId = this.webContentsView.webContents.id;
         LocalNetworkAccessManager.registerWebContents(this.webContentsView.webContents);
+        applyBrandStyles(this.webContentsView.webContents);
         this.resetLoadingStatus();
 
         this.log = ViewManager.getViewLog(this.id, 'MattermostWebContentsView');
@@ -472,8 +475,11 @@ export class MattermostWebContentsView extends EventEmitter {
     private handleUpdateTarget = (e: Event, url: string) => {
         this.log.silly('handleUpdateTarget');
         const parsedURL = parseURL(url);
+        const brandLabel = parsedURL && getBrandPageLabel(parsedURL);
         if (parsedURL && isInternalURL(parsedURL, ServerManager.getServer(this.view.serverId)?.url ?? this.view.getLoadingURL())) {
             this.emit(UPDATE_TARGET_URL);
+        } else if (brandLabel) {
+            this.emit(UPDATE_TARGET_URL, brandLabel);
         } else {
             this.emit(UPDATE_TARGET_URL, url);
         }
