@@ -17,6 +17,7 @@ body {
     visibility: visible;
     z-index: 10;
     overflow: hidden;
+    background-color: #FFFFFF;
     
     transition: opacity 150ms 0ms ease-out, visibility 150ms 0ms step-start;
 
@@ -35,4 +36,8 @@ body {
         
         transition: opacity 150ms 0ms ease-in, visibility 150ms 0ms step-end;
     }
+}
+
+.darkMode .LoadingScreen {
+    background-color: #01122C;
 }

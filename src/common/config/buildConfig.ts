@@ -24,17 +24,19 @@ import {DEFAULT_ACADEMY_LINK, DEFAULT_HELP_LINK, DEFAULT_UPGRADE_LINK} from '../
  * @prop {[]} trustedEmbeddedMediaOrigins - Explicit origin pairs that may share media permissions for embedded content
  */
 const buildConfig: BuildConfig = {
-    defaultServers: [/*
-    {
-      name: 'example',
-      url: 'https://example.com'
-    }
-  */],
+    defaultServers: [
+        {
+            name: 'Amaze One',
+            url: 'https://chat.amazepro.net',
+        },
+    ],
     helpLink: DEFAULT_HELP_LINK,
     academyLink: DEFAULT_ACADEMY_LINK,
     upgradeLink: DEFAULT_UPGRADE_LINK,
     enableServerManagement: true,
-    enableUpdateNotifications: true,
+
+    // Off: the update feed is Mattermost's, so it would offer their releases instead of Amaze One builds
+    enableUpdateNotifications: false,
     updateNotificationURL: 'https://releases.mattermost.com/desktop',
     macAppStoreUpdateURL: 'macappstore://apps.apple.com/us/app/mattermost-desktop/id1614666244',
     windowsStoreUpdateURL: 'ms-windows-store://pdp/?productid=XP8BR8MH3LPKLT',

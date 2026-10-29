@@ -1,319 +1,143 @@
 @use 'base/css_variables';
 
 .LoadingAnimation {
-  --fade-duration: 150ms;
-  --colour: var(--center-channel-color);
-  --animation-initial-delay: 500ms;
-  --animation-start-duration: 750ms;
-  --animation-end-duration: 600ms;
-  --animation-spinner-speed: 500ms;
-  --animation-spinner-mask-stroke-length: 169.6;
-  --ease-in-cubic: cubic-bezier(0.32, 0, 0.67, 0);
-  --ease-in: var(--ease-in-cubic);
-  --ease-in-out-cubic: cubic-bezier(0.65, 0, 0.35, 1);
-  --ease-in-out: var(--ease-in-out-cubic);
-  --ease-in-out-compass-shrink: cubic-bezier(0.1, 0.25, 0.3, 1);
-  
+  --amaze-orange: #FA5000;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in: cubic-bezier(0.32, 0, 0.67, 0);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   opacity: 0;
-  transform: scale3d(1, 1, 1);
 
-  g,
-  rect,
-  path,
-  circle {
-    transform-origin: center center;
+  &__icon {
+    width: 112px;
+    height: 112px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
   }
 
-  svg {
-    color: var(--colour);
+  &__icon-dark {
+    display: none;
   }
 
-  &__spinner-gradient-color {
-    stop-color: var(--colour);
+  &__wordmark {
+    margin-top: 28px;
   }
 
-  &__spinner-mask {
-    transform: scale3d(1.03, 1.03, 1);
-    stroke-dasharray: var(--animation-spinner-mask-stroke-length);
-    stroke-dashoffset: var(--animation-spinner-mask-stroke-length);
+  &__progress {
+    position: relative;
+    width: 160px;
+    height: 3px;
+    margin-top: 32px;
+    border-radius: 2px;
+    background: rgba(var(--center-channel-color-rgb), 0.1);
+    overflow: hidden;
   }
 
-  &__spinner-container {
-    opacity: 0;
-    transform: scale3D(2.08, 2.08, 1) rotate3d(0, 0, 1, -10deg);
-  }
-
-  &__spinner-mask-container {
-    transform: rotate3d(0, 0, 1, -86deg);
-  }
-
-  &__compass {
-    opacity: 1;
-    transform: scale3d(1, 1, 1);
-  }
-
-  &__compass-needle-container {
-    transform: scale3d(1, 1, 1);
-  }
-
-  &__compass-needle,
-  &__compass-needle-front-mask,
-  &__compass-needle-behind-mask {
-    transform-origin: 54px 46px;
-    transform: rotate3d(0, 0, 1, 0deg);
-  }
-
-  &__compass-base-mask-container {
-    transform: rotate3d(0, 0, 1, -86deg);
-  }
-
-  &__compass-base-mask {
-    stroke-dasharray: var(--animation-spinner-mask-stroke-length);
-    stroke-dashoffset: var(--animation-spinner-mask-stroke-length);
+  &__progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40%;
+    height: 100%;
+    border-radius: 2px;
+    background: var(--amaze-orange);
+    transform: translateX(-100%);
   }
 
   &--loading {
-    --fade-in-duration: 150ms;
-    --fade-in-delay: 0ms;
+    animation: LoadingAnimation__fade-in 200ms var(--ease-out) forwards;
 
-    animation:
-      LoadingAnimation__fade-in var(--fade-in-duration) var(--fade-in-delay) var(--ease-in) forwards;
-
-    transform: scale3d(1, 1, 1);
-
-    .LoadingAnimation__spinner-container {
-      --shrink-duration: calc(var(--animation-end-duration) * 0.5);
-      --shrink-delay: calc( ( var(--animation-start-duration) + var(--animation-end-duration) ) * 0.91 + var(--animation-initial-delay));
-      --fade-in-duration: calc(var(--animation-end-duration) * 0.25);
-      --fade-in-delay: calc( var(--animation-start-duration) + var(--animation-end-duration) * 0.24 + var(--animation-initial-delay));
-      
-      animation:
-        LoadingAnimation__spinner-shrink var(--shrink-duration) var(--shrink-delay) var(--ease-in-out-compass-shrink) forwards,
-        LoadingAnimation__fade-in var(--fade-in-duration) var(--fade-in-delay) var(--ease-in) forwards;
+    .LoadingAnimation__icon {
+      animation: LoadingAnimation__intro 700ms 100ms var(--ease-out) both;
     }
 
-    .LoadingAnimation__spinner-mask {
-      --reveal-duration: var(--animation-end-duration);
-      --reveal-delay: calc(var(--animation-start-duration) + var(--animation-initial-delay));
-      
-      animation:
-        LoadingAnimation__spinner-reveal var(--reveal-duration) var(--reveal-delay) var(--ease-in) forwards;
+    .LoadingAnimation__wordmark {
+      animation: LoadingAnimation__rise 600ms 300ms var(--ease-out) both;
     }
 
-    .LoadingAnimation__compass {
-      --shrink-duration: calc(var(--animation-end-duration) * 0.5);
-      --shrink-delay: calc( ( var(--animation-start-duration) + var(--animation-end-duration) ) * 0.91 + var(--animation-initial-delay));
-      
-      animation:
-        LoadingAnimation__compass-shrink var(--shrink-duration) var(--shrink-delay) var(--ease-in-out-compass-shrink) forwards;
+    .LoadingAnimation__progress {
+      animation: LoadingAnimation__fade-in 300ms 500ms var(--ease-out) both;
     }
 
-    .LoadingAnimation__compass-needle-container {
-      --shrink-duration: calc(var(--animation-end-duration) * 0.25);
-      --shrink-delay: calc( var(--animation-start-duration) + var(--animation-end-duration) - var(--animation-end-duration) * 0.25 + var(--animation-initial-delay));
-      
-      animation:
-        LoadingAnimation__needle-shrink var(--shrink-duration) var(--shrink-delay) var(--ease-in) forwards;
+    .LoadingAnimation__progress-bar {
+      animation: LoadingAnimation__sweep 1100ms 500ms ease-in-out infinite;
     }
-
-    .LoadingAnimation__compass-needle {
-      --spin-left-duration: var(--animation-start-duration);
-      --spin-left-delay: var(--animation-initial-delay);
-      --spin-right-duration: var(--animation-end-duration);
-      --spin-right-delay: calc(var(--animation-start-duration) + var(--animation-initial-delay));
-      --fade-out-duration: calc(var(--animation-end-duration) * 0.25);
-      --fade-out-delay: calc( var(--animation-start-duration) + var(--animation-end-duration) - var(--animation-end-duration) * 0.25 + var(--animation-initial-delay));
-      
-      animation:
-        LoadingAnimation__needle-spin-left var(--spin-left-duration) var(--spin-left-delay) var(--ease-in-out) forwards,
-        LoadingAnimation__needle-spin-right var(--spin-right-duration) var(--spin-right-delay) var(--ease-in) forwards,
-        LoadingAnimation__fade-out var(--fade-out-duration) var(--fade-out-delay) var(--ease-in) forwards;
-    }
-
-    .LoadingAnimation__compass-needle-behind-mask {
-      --spin-left-duration: var(--animation-start-duration);
-      --spin-left-delay: var(--animation-initial-delay);
-      --spin-right-duration: calc(var(--animation-end-duration) * 0.3666);
-      --spin-right-delay: calc(var(--animation-start-duration) + var(--animation-initial-delay));
-      
-      animation:
-        LoadingAnimation__needle-mask-spin-left var(--spin-left-duration) var(--spin-left-delay) var(--ease-in-out) forwards,
-        LoadingAnimation__needle-mask-spin-right var(--spin-right-duration) var(--spin-right-delay) var(--ease-in) forwards;
-    }
-
-    .LoadingAnimation__compass-needle-front-mask {
-      --spin-left-duration: var(--animation-start-duration);
-      --spin-left-delay:  var(--animation-initial-delay);
-      --spin-right-duration: var(--animation-end-duration);
-      --spin-right-delay: calc(var(--animation-start-duration) + var(--animation-initial-delay));
-      
-      animation:
-        LoadingAnimation__needle-spin-left var(--spin-left-duration) var(--spin-left-delay) var(--ease-in-out) forwards,
-        LoadingAnimation__needle-spin-right var(--spin-right-duration) var(--spin-right-delay) var(--ease-in) forwards;
-    }
-
-    .LoadingAnimation__compass-base-mask {
-      --conceal-duration: var(--animation-end-duration);
-      --conceal-delay: calc(var(--animation-start-duration) + var(--animation-initial-delay));
-      
-      animation:
-        LoadingAnimation__compass-base-conceal var(--conceal-duration) var(--conceal-delay) var(--ease-in) forwards;
-    }
-  }
-
-  &--spinning .LoadingAnimation__spinner {
-    --spin-duration: var(--animation-spinner-speed);
-    --spin-delay: calc( ( var(--animation-start-duration) + var(--animation-end-duration) ) * 0.95 + var(--animation-initial-delay));
-    
-    animation:
-      LoadingAnimation__spinner-spin var(--spin-duration) var(--spin-delay) linear infinite;
   }
 
   &--loaded {
-    --duration: 150ms;
-    --delay: 0ms;
+    opacity: 1;
+    animation: LoadingAnimation__exit 180ms var(--ease-in) forwards;
+  }
+}
 
-    animation:
-      LoadingAnimation__fade-out var(--duration) var(--delay) var(--ease-in) forwards,
-      LoadingAnimation__shrink var(--duration) var(--delay) var(--ease-in) forwards;
+.darkMode .LoadingAnimation {
+  &__icon-light {
+    display: none;
+  }
 
-    .LoadingAnimation__spinner-container {
-      opacity: 1;
-      transform: scale3D(1, 1, 1) rotate3d(0, 0, 1, -10deg);
-    }
+  &__icon-dark {
+    display: block;
+  }
 
-    .LoadingAnimation__spinner-mask {
-      stroke-dashoffset: 0;
-    }
-
-    .LoadingAnimation__compass {
-      transform: scale3D(0.4166666667, 0.4166666667, 1);
-    }
-
-    .LoadingAnimation__compass-needle-container {
-      transform: scale3d(0.35, 0.35, 1);
-    }
-
-    .LoadingAnimation__compass-needle {
-      opacity: 0;
-      transform: rotate3d(0, 0, 1, 405deg);
-    }
-
-    .LoadingAnimation__compass-needle-behind-mask {
-      transform: rotate3d(0, 0, 1, 0deg);
-    }
-
-    .LoadingAnimation__compass-needle-front-mask {
-      transform: rotate3d(0, 0, 1, 405deg);
-    }
-
-    .LoadingAnimation__compass-base-mask {
-      stroke-dashoffset: 0;
-    }
+  &__progress {
+    background: rgba(255, 255, 255, 0.12);
   }
 }
 
 @keyframes LoadingAnimation__fade-in {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-@keyframes LoadingAnimation__fade-out {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-@keyframes LoadingAnimation__shrink {
-  0% {
-    transform: scale3d(1, 1, 1);
-  }
-  100% {
-    transform: scale3d(0.35, 0.35, 1);
-  }
-}
-@keyframes LoadingAnimation__spinner-shrink {
-  0% {
-    transform: scale3D(2.08, 2.08, 1) rotate3d(0, 0, 1, -10deg);
-  }
-  100% {
-    transform: scale3D(1, 1, 1) rotate3d(0, 0, 1, -10deg);
-  }
-}
-@keyframes LoadingAnimation__spinner-spin {
   from {
-    transform: rotate3d(0, 0, 1, 0deg);
+    opacity: 0;
   }
   to {
-    transform: rotate3d(0, 0, 1, 359deg);
+    opacity: 1;
   }
 }
-@keyframes LoadingAnimation__spinner-reveal {
-  0%, 5% {
-    stroke-dashoffset: var(--animation-spinner-mask-stroke-length);
+
+@keyframes LoadingAnimation__intro {
+  from {
+    opacity: 0;
+    transform: scale3d(0.82, 0.82, 1);
   }
-  95%, 100% {
-    stroke-dashoffset: 0;
-  }
-}
-@keyframes LoadingAnimation__needle-spin-left {
-  0% {
-    transform: rotate3d(0, 0, 1, 0deg);
-  }
-  100% {
-    transform: rotate3d(0, 0, 1, -20deg);
-  }
-}
-@keyframes LoadingAnimation__needle-spin-right {
-  0% {
-    transform: rotate3d(0, 0, 1, -20deg);
-  }
-  100% {
-    transform: rotate3d(0, 0, 1, 405deg);
-  }
-}
-@keyframes LoadingAnimation__needle-mask-spin-left {
-  0% {
-    transform: rotate3d(0, 0, 1, 0deg);
-  }
-  100% {
-    transform: rotate3d(0, 0, 1, -20deg);
-  }
-}
-@keyframes LoadingAnimation__needle-mask-spin-right {
-  0% {
-    transform: rotate3d(0, 0, 1, -20deg);
-  }
-  100% {
-    transform: rotate3d(0, 0, 1, 0deg);
-  }
-}
-@keyframes LoadingAnimation__needle-shrink {
-  0% {
+  to {
+    opacity: 1;
     transform: scale3d(1, 1, 1);
   }
-  100% {
-    transform: scale3d(0.35, 0.35, 1);
+}
+
+@keyframes LoadingAnimation__rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
   }
 }
-@keyframes LoadingAnimation__compass-shrink {
-  0% {
-    transform: scale3D(1, 1, 1);
+
+@keyframes LoadingAnimation__sweep {
+  from {
+    transform: translateX(-100%);
   }
-  100% {
-    transform: scale3D(0.4166666667, 0.4166666667, 1);
+  to {
+    transform: translateX(250%);
   }
 }
-@keyframes LoadingAnimation__compass-base-conceal {
-  0%, 5% {
-    stroke-dashoffset: var(--animation-spinner-mask-stroke-length);
+
+@keyframes LoadingAnimation__exit {
+  from {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
   }
-  95%, 100% {
-    stroke-dashoffset: 0;
+  to {
+    opacity: 0;
+    transform: scale3d(0.96, 0.96, 1);
   }
 }

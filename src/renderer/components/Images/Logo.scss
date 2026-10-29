@@ -1,0 +1,22 @@
+.AmazeOneLogo {
+    display: inline-flex;
+    align-items: center;
+
+    .AmazeOneLogo__dark {
+        display: none;
+    }
+
+    .AmazeOneLogo__light {
+        display: block;
+    }
+}
+
+.darkMode .AmazeOneLogo {
+    .AmazeOneLogo__dark {
+        display: block;
+    }
+
+    .AmazeOneLogo__light {
+        display: none;
+    }
+}

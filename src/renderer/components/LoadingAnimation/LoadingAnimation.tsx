@@ -4,6 +4,7 @@
 import classNames from 'classnames';
 import React from 'react';
 
+import Logo from 'renderer/components/Images/Logo';
 import LoadingIcon from 'renderer/components/LoadingAnimation/LoadingIcon';
 
 import useAnimationEnd from '../../hooks/useAnimationEnd';
@@ -11,12 +12,15 @@ import useAnimationEnd from '../../hooks/useAnimationEnd';
 import './LoadingAnimation.scss';
 
 const LOADING_STATE = {
-    INITIALIZING: 'initializing', // animation graphics are hidden
-    LOADING: 'loading', // animation graphics fade in and animate
-    LOADED: 'loaded', // animation graphics fade out
+    INITIALIZING: 'initializing', // splash graphics are hidden
+    LOADING: 'loading', // splash graphics animate in and the progress bar runs
+    LOADED: 'loaded', // splash graphics fade out
 };
 
-const ANIMATION_COMPLETION_DELAY = 500;
+// The intro has to finish before the splash may fade out, so it never just flashes
+const INTRO_ANIMATION = 'LoadingAnimation__intro';
+const EXIT_ANIMATION = 'LoadingAnimation__exit';
+const ANIMATION_COMPLETION_DELAY = 300;
 
 type Props = {
     loading: boolean;
@@ -24,65 +28,60 @@ type Props = {
 }
 
 /**
- * A function component for rendering the animated MM logo loading sequence
+ * The Amaze One splash: app icon and wordmark with an indeterminate progress bar
  * @param {boolean} loading - Prop that indicates whether currently loading or not
- * @param {boolean} darkMode - Prop that indicates if dark mode is enabled
- * @param {function} onLoadingAnimationComplete - Callback function to update when internal loading animation is complete
+ * @param {function} onLoadAnimationComplete - Callback function to update when internal loading animation is complete
  */
 function LoadingAnimation({
     loading = false,
     onLoadAnimationComplete = undefined}: Props,
 ) {
-    const loadingIconContainerRef = React.useRef(null);
+    const containerRef = React.useRef(null);
     const [animationState, setAnimationState] = React.useState(LOADING_STATE.INITIALIZING);
-    const [loadingAnimationComplete, setLoadingAnimationComplete] = React.useState(false);
+    const [introComplete, setIntroComplete] = React.useState(false);
 
     React.useEffect(() => {
         if (loading) {
             setAnimationState(LOADING_STATE.LOADING);
-            setLoadingAnimationComplete(false);
-        }
-
-        // in order for the logo animation to fully complete before fading out, the LOADED state is not set until
-        // both the external loaded prop changes back to false and the internal loading animation is complete
-        if (!loading && loadingAnimationComplete) {
-            setAnimationState(LOADING_STATE.LOADED);
+            setIntroComplete(false);
         }
     }, [loading]);
 
     React.useEffect(() => {
-    // in order for the logo animation to fully complete before fading out, the LOADED state is not set until
-    // both the external loaded prop goes back to false and the internal loading animation is complete
-        if (!loading && loadingAnimationComplete) {
+        // only fade out once loading has finished and the intro has played through
+        if (!loading && introComplete) {
             setAnimationState(LOADING_STATE.LOADED);
         }
-    }, [loadingAnimationComplete]);
+    }, [loading, introComplete]);
 
-    // listen for end of the css logo animation sequence
-    useAnimationEnd<HTMLDivElement>(loadingIconContainerRef, () => {
+    useAnimationEnd<HTMLDivElement>(containerRef, () => {
         setTimeout(() => {
-            setLoadingAnimationComplete(true);
+            setIntroComplete(true);
         }, ANIMATION_COMPLETION_DELAY);
-    }, 'LoadingAnimation__compass-shrink');
+    }, INTRO_ANIMATION);
 
-    // listen for end of final css logo fade/shrink animation sequence
-    useAnimationEnd<HTMLDivElement>(loadingIconContainerRef, () => {
+    useAnimationEnd<HTMLDivElement>(containerRef, () => {
         if (onLoadAnimationComplete) {
             onLoadAnimationComplete();
         }
         setAnimationState(LOADING_STATE.INITIALIZING);
-    }, 'LoadingAnimation__shrink');
+    }, EXIT_ANIMATION, false);
 
     return (
         <div
-            ref={loadingIconContainerRef}
+            ref={containerRef}
             className={classNames('LoadingAnimation', {
-                'LoadingAnimation--spinning': animationState !== LOADING_STATE.INITIALIZING,
                 'LoadingAnimation--loading': animationState === LOADING_STATE.LOADING,
                 'LoadingAnimation--loaded': animationState === LOADING_STATE.LOADED,
             })}
         >
             <LoadingIcon/>
+            <div className='LoadingAnimation__wordmark'>
+                <Logo height={30}/>
+            </div>
+            <div className='LoadingAnimation__progress'>
+                <span className='LoadingAnimation__progress-bar'/>
+            </div>
         </div>
     );
 }

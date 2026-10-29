@@ -2,54 +2,53 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
-import amazeOneDark from 'renderer/assets/amaze_one_dark.png';
-import amazeOneLight from 'renderer/assets/amaze_one_light.png';
+
+import amazeOneDarkText from 'renderer/assets/amaze-one-dark-text.png';
+import amazeOneLightText from 'renderer/assets/amaze-one-light-text.png';
+
+import './Logo.scss';
+
+// The brand wordmark artwork is 1024x341 with the lettering at y 91-236, x 15-1003.
+const ARTWORK_HEIGHT = 341;
+const LETTERING_TOP = 91;
+const LETTERING_HEIGHT = 145;
+const LETTERING_LEFT = 15;
+const ARTWORK_WIDTH = 1024;
 
 type Props = {
-    width?: number | string;
-    height?: number | string;
+
+    /** Height of the visible lettering, in px */
+    height?: number;
 };
 
 export default ({
-    width,
     height = 36,
-}: Props) => (
-    <div className='AmazeOneLogo' style={{display: 'inline-flex', alignItems: 'center'}}>
-        <img
-            src={amazeOneLight}
-            alt='Amaze One'
-            className='AmazeOneLogo__light'
-            style={{
-                height: typeof height === 'number' ? `${height}px` : height,
-                width: width ? (typeof width === 'number' ? `${width}px` : width) : 'auto',
-                maxWidth: '100%',
-                objectFit: 'contain',
-                display: 'block',
-            }}
-        />
-        <img
-            src={amazeOneDark}
-            alt='Amaze One'
-            className='AmazeOneLogo__dark'
-            style={{
-                height: typeof height === 'number' ? `${height}px` : height,
-                width: width ? (typeof width === 'number' ? `${width}px` : width) : 'auto',
-                maxWidth: '100%',
-                objectFit: 'contain',
-                display: 'none',
-            }}
-        />
-        <style>{`
-            .AmazeOneLogo .AmazeOneLogo__dark { display: none !important; }
-            .AmazeOneLogo .AmazeOneLogo__light { display: block !important; }
-            body.darkMode .AmazeOneLogo .AmazeOneLogo__dark,
-            .darkMode .AmazeOneLogo .AmazeOneLogo__dark { display: block !important; }
-            body.darkMode .AmazeOneLogo .AmazeOneLogo__light,
-            .darkMode .AmazeOneLogo .AmazeOneLogo__light { display: none !important; }
-            @media (prefers-color-scheme: dark) {
-                :root:not(.lightMode) .AmazeOneLogo .AmazeOneLogo__dark { display: block !important; }
-                :root:not(.lightMode) .AmazeOneLogo .AmazeOneLogo__light { display: none !important; }
-            }
-        `}</style>
-    </div>
-);
+}: Props) => {
+    const scale = height / LETTERING_HEIGHT;
+    const imgStyle: React.CSSProperties = {
+        height: `${ARTWORK_HEIGHT * scale}px`,
+        width: `${ARTWORK_WIDTH * scale}px`,
+        maxWidth: 'none',
+        marginTop: `${-LETTERING_TOP * scale}px`,
+        marginBottom: `${-(ARTWORK_HEIGHT - LETTERING_TOP - LETTERING_HEIGHT) * scale}px`,
+        marginLeft: `${-LETTERING_LEFT * scale}px`,
+        objectFit: 'contain',
+    };
+
+    return (
+        <div className='AmazeOneLogo'>
+            <img
+                src={amazeOneLightText}
+                alt='Amaze One'
+                className='AmazeOneLogo__light'
+                style={imgStyle}
+            />
+            <img
+                src={amazeOneDarkText}
+                alt='Amaze One'
+                className='AmazeOneLogo__dark'
+                style={imgStyle}
+            />
+        </div>
+    );
+};
